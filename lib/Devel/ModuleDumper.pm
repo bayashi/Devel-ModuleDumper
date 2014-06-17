@@ -47,6 +47,18 @@ my $ALL = $ENV{MODULEDUMPER_SHOW_ALL};
 
 our $SHOWN = 0;
 
+my $CONF;
+sub import {
+    my ($class) = shift;
+
+    for my $opt (@_) {
+        next unless $opt;
+        if ($opt eq 'showall') {
+            $CONF->{showall} = 1;
+        }
+    }
+}
+
 sub show {
     my $result = '';
 
@@ -69,7 +81,7 @@ sub _get_module_information {
     my %modules;
     for my $module_path (keys %INC) {
         my $class = _path2class($module_path);
-        unless ($ALL) {
+        if (!$ALL && !$CONF->{showall}) {
             next if $seen{$module_path}
                         || $module_path !~ m!\.pm$!
                         || $pragmas{$class}
