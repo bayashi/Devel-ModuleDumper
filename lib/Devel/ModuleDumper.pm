@@ -60,6 +60,8 @@ sub import {
 }
 
 sub show {
+    my $self = shift;
+
     my $result = '';
 
     return $result if $SHOWN;
@@ -123,7 +125,7 @@ sub _get_version {
 }
 
 END {
-    my $info = show();
+    my $info = __PACKAGE__->show;
     print $info;
 }
 
