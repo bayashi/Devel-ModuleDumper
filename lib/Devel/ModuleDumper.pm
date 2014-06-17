@@ -230,6 +230,11 @@ Welcome your patches and issues :D
 Dai Okabayashi E<lt>bayashi@cpan.orgE<gt>
 
 
+=head1 SEE ALSO
+
+L<Devel::Loaded>, L<Devel::Modlist>, L<Devel::VersionDump>, L<Module::PrintUsed>
+
+
 =head1 LICENSE
 
 This module is free software; you can redistribute it and/or
