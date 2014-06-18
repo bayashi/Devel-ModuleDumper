@@ -55,6 +55,10 @@ sub import {
         next unless $opt;
         if ($opt =~ m!^(show(?:all|seen|pragma|pragmas|skip|skips|pl))$!) {
             $CONF->{$1} = 1;
+            next;
+        }
+        if ($opt eq '-stderr') {
+            $CONF->{'-stderr'} = 1;
         }
     }
 }
@@ -132,7 +136,8 @@ sub _get_version {
 
 END {
     my $info = __PACKAGE__->show;
-    print $info;
+    my $out = $CONF->{'-stderr'} ? *STDERR : *STDOUT;
+    print $out "$info";
 }
 
 package # hide the package from the PAUSE indexer
