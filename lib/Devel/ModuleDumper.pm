@@ -142,6 +142,7 @@ END {
 
 package # hide the package from the PAUSE indexer
     DB;
+no warnings 'redefine'; ## no critic
 sub DB {}
 
 1;
