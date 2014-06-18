@@ -14,7 +14,7 @@ like $stdout, qr/^Perl\t\d+/;
 like $stdout, qr/Test::More\t\d+/;
 like $stdout, qr/Capture::Tiny\t\d+/;
 
-like $stdout, qr/utf8_heavy.pl/;
+like $stdout, qr/.+\.pl/;
 
 if ($ENV{AUTHOR_TEST}) {
     note $stdout;
