@@ -56,6 +56,18 @@ sub import {
         if ($opt eq 'showall') {
             $CONF->{showall} = 1;
         }
+        if ($opt eq 'showseen') {
+            $CONF->{showseen} = 1;
+        }
+        if ($opt eq 'showpragma' || $opt eq 'showpragmas') {
+            $CONF->{showpragma} = 1;
+        }
+        if ($opt eq 'showskip' || $opt eq 'showskips') {
+            $CONF->{showskip} = 1;
+        }
+        if ($opt eq 'showpl') {
+            $CONF->{showpl} = 1;
+        }
     }
 }
 
@@ -84,10 +96,10 @@ sub _get_module_information {
     for my $module_path (keys %INC) {
         my $class = _path2class($module_path);
         if (!$ALL && !$CONF->{showall}) {
-            next if $seen{$module_path}
-                        || $module_path !~ m!\.pm$!
-                        || $pragmas{$class}
-                        || $skips{$class}
+            next if (!$CONF->{showseen} && $seen{$module_path})
+                        || (!$CONF->{showpl} && $module_path !~ m!\.pm$!)
+                        || (!$CONF->{showpragma} && $pragmas{$class})
+                        || (!$CONF->{skip} && $skips{$class})
                         || $class eq __PACKAGE__;
         }
         $modules{$class} = {
