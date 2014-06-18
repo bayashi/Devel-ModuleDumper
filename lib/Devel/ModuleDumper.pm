@@ -53,20 +53,8 @@ sub import {
 
     for my $opt (@_) {
         next unless $opt;
-        if ($opt eq 'showall') {
-            $CONF->{showall} = 1;
-        }
-        if ($opt eq 'showseen') {
-            $CONF->{showseen} = 1;
-        }
-        if ($opt eq 'showpragma' || $opt eq 'showpragmas') {
-            $CONF->{showpragma} = 1;
-        }
-        if ($opt eq 'showskip' || $opt eq 'showskips') {
-            $CONF->{showskip} = 1;
-        }
-        if ($opt eq 'showpl') {
-            $CONF->{showpl} = 1;
+        if ($opt =~ m!^(show(?:all|seen|pragma|pragmas|skip|skips|pl))$!) {
+            $CONF->{$1} = 1;
         }
     }
 }
@@ -108,10 +96,10 @@ sub _get_module_information {
 sub _skip_to_show {
     my ($module_path, $class) = @_;
 
-    return 1 if    (!$CONF->{showseen}   && $seen{$module_path})
-                || (!$CONF->{showpl}     && $module_path !~ m!\.pm$!)
-                || (!$CONF->{showpragma} && $pragmas{$class})
-                || (!$CONF->{skip}       && $skips{$class})
+    return 1 if (!$CONF->{showseen} && $seen{$module_path})
+                || (!$CONF->{showpl} && $module_path !~ m!\.pm$!)
+                || ((!$CONF->{showpragma} && !$CONF->{showpragmas}) && $pragmas{$class})
+                || ((!$CONF->{skip} && !$CONF->{skips}) && $skips{$class})
                 || $class eq __PACKAGE__;
 }
 
