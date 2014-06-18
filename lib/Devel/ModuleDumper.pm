@@ -96,17 +96,23 @@ sub _get_module_information {
     for my $module_path (keys %INC) {
         my $class = _path2class($module_path);
         if (!$ALL && !$CONF->{showall}) {
-            next if (!$CONF->{showseen} && $seen{$module_path})
-                        || (!$CONF->{showpl} && $module_path !~ m!\.pm$!)
-                        || (!$CONF->{showpragma} && $pragmas{$class})
-                        || (!$CONF->{skip} && $skips{$class})
-                        || $class eq __PACKAGE__;
+            next if _skip_to_show($module_path, $class);
         }
         $modules{$class} = {
             version => _get_version($class),
         };
     }
     return \%modules;
+}
+
+sub _skip_to_show {
+    my ($module_path, $class) = @_;
+
+    return 1 if    (!$CONF->{showseen}   && $seen{$module_path})
+                || (!$CONF->{showpl}     && $module_path !~ m!\.pm$!)
+                || (!$CONF->{showpragma} && $pragmas{$class})
+                || (!$CONF->{skip}       && $skips{$class})
+                || $class eq __PACKAGE__;
 }
 
 sub _path2class {
