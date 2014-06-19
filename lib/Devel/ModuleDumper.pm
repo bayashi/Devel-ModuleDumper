@@ -233,6 +233,49 @@ By default, some modules are filtered. If you set C<MODULEDUMPER_SHOW_ALL=1>, al
 =back
 
 
+=head1 OPTIONS
+
+If you set options at loading, then the modules will be shown what you want.
+
+    $ perl -d:ModuleDumper=option1[,option2...] your_script.pl
+
+or
+
+    $ perl -M:Devel::ModuleDumper=option1[,option2...] your_script.pl
+
+or
+
+    use Devel::ModuleDumper qw/option1[ option2...]/;
+
+=over
+
+=item B<all>
+
+show all modules. same as C<MODULEDUMPER_SHOW_ALL> environment.
+
+=item B<seen>
+
+show modules which are loaded at BEGIN phase.
+
+=item B<pragma>
+
+Actually, typical pragma modules are filtered by default. If you give C<pragma> option, then the pragma modules will be shown.
+
+=item B<skip>
+
+Several modules are filtered. If you give C<skip> option, then these modules will be shown.
+
+=item B<pl>
+
+Sometime, you can find C<*.pl> module(script) in loaded modules. These are filtered by default. If you give C<pl> option, then these modules will be shown.
+
+=item B<-stderr>
+
+By default, dump result is put to STDOUT. If you want to switch STDOUT to STDERR, you set C<-stderr> option.
+
+=back
+
+
 =head1 METHOD
 
 =over
