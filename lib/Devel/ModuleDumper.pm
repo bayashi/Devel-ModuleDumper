@@ -7,7 +7,7 @@ BEGIN {
     %seen = %INC;
 }
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 our %pragmas;
 for my $pragma (qw/
